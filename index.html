@@ -2,6 +2,13 @@
 <html lang="en">
 
 <head>
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({
+      token: "ade53e77b93e4b14aafc979e6e79fa36"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -102,6 +109,101 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
+
+    // Step 2 - Adding Buttons for Console Testing
+    const mockData = [
+      {name: 'John Smith', age: 30},
+      {name: 'Jane Doe', age: 30}
+    ];
+
+    const handleBtnClick = [
+      // Console Log
+      () => console.log('Console Log Demo', { message: 'Testing, hello world', count: 3 }),
+      
+      // Console Error
+      () => console.error('Console Error Demo', new Error('Test error')),
+      
+      // Console Count
+      () => console.count('Count Button'),
+      
+      // Console Warn
+      () => console.warn('Console Warn Button', 'Warning'),
+      
+      // Console Assert
+      () => console.assert(false, { number: 6, errorMsg: 'The number does not equal 7' }),
+      
+      // Console Clear
+      () => console.clear(),
+      
+      // Console Dir
+      () => console.dir(errorBtns[6]),
+      
+      // Console dirxml
+      () => console.dirxml(errorBtns[7]),
+      
+      // Console Group Start
+      () => {
+        console.group('console.group');
+        console.log('Grouped message 1');
+        console.log('Grouped message 2', mockData);
+      },
+      
+      // Console Group End
+      () => console.groupEnd(),
+      
+      // Console Table
+      () => console.table(mockData),
+      
+      // Start Timer
+      () => console.time('Timer Button'),
+      
+      // End Timer
+      () => console.timeEnd('Timer Button'),
+      
+      // Console Trace
+      () => {
+        function deep() {
+          function deeper() {
+            function deepest() {
+              console.trace('console.trace');
+            }
+            deepest();
+          }
+          deeper();
+        }
+        deep();
+      }, 
+      
+      // Step 5 - The Global Error handler and 3rd Party Tracking
+      () => {
+        try {
+          document.querySelector("button").deep();
+        } catch (err) {
+          console.error(err); 
+        }
+      }
+    ];
+
+    errorBtns.forEach((btn, idx) => {
+      if (handleBtnClick[idx]) btn.addEventListener('click', handleBtnClick[idx]);
+    });
+
+    // Step 4 - Throw and Custom Errors
+    class CustomError extends Error {
+      constructor(message) {
+        super(message);
+        this.name = 'Custom Error';
+      }
+    };
+
+    // Step 3 - Trying Try / Catch and Throw CustomError
+    try {
+      throw new CustomError('This is a custom error');
+    } catch (err) {
+      console.error(err);
+    };
+  
+
   </script>
 </body>
 
